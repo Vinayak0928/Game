@@ -4,12 +4,15 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+void startGame() {
+
     srand(time(0));
 
-    int x = 1;              // player position (0 to 2)
-    int step = 0;           // obstacle vertical movement
-    int obstaclePos = rand() % 3;   // 0,1,2 lane
+    int x = 1;              // player lane (0,1,2)
+    int step = 0;           // obstacle vertical position
+    int obstaclePos = rand() % 3;
+    int score = 0;          // score
+    int speed = 150;        // initial speed (higher = slower)
 
     while (1) {
 
@@ -26,50 +29,82 @@ int main() {
 
         // ---- DRAW ----
         system("cls");
-        printf("|--- --- ---|\n");
 
+        printf("Score: %d\n", score);
+        printf("+-----------+\n");
+
+        // GAME AREA
         for (int i = 0; i < 10; i++) {
+
             if (i == step) {
-
                 if (obstaclePos == 0)
-                    printf("| %c        |\n", 1);
-
+                    printf("| *         |\n");
                 else if (obstaclePos == 1)
-                    printf("|     %c    |\n", 1);
-
-                else if (obstaclePos == 2)
-                    printf("|        %c |\n", 1);
-
-            } else {
+                    printf("|     *     |\n");
+                else
+                    printf("|         * |\n");
+            }
+            else {
                 printf("|           |\n");
             }
         }
 
-        // ---- PLAYER ----
+        // PLAYER
         if (x == 0)
-            printf("| %c        |\n", 6);
+            printf("| |         |\n");
         else if (x == 1)
-            printf("|     %c    |\n", 6);
-        else if (x == 2)
-            printf("|        %c |\n", 6);
+            printf("|     |     |\n");
+        else
+            printf("|         | |\n");
+
+        printf("+-----------+\n");
 
         // ---- COLLISION ----
         if (step == 10 && x == obstaclePos) {
             printf("\nGAME OVER!\n");
-            break;
+            printf("Final Score: %d\n", score);
+
+            printf("\nPress R to Restart or Q to Quit...\n");
+
+            while (1) {
+                if (_kbhit()) {
+                    char ch = getch();
+                    if (ch == 'r' || ch == 'R') {
+                        startGame();   // restart game
+                        return;
+                    }
+                    if (ch == 'q' || ch == 'Q') {
+                        exit(0);       // quit game
+                    }
+                }
+            }
         }
 
-        Sleep(120);
+        Sleep(speed);
 
-        // Move obstacle down
+        // Move obstacle downward
         step++;
 
-        // Reset when reaches bottom
+        // Reset after reaching bottom
         if (step > 10) {
             step = 0;
-            obstaclePos = rand() % 3; // new lane
+            obstaclePos = rand() % 3;
+            score++;
+
+            // Increase difficulty
+            if (speed > 40)
+                speed -= 5;
         }
     }
+}
+
+int main() {
+
+    printf("Use LEFT and RIGHT arrow keys to move.\n");
+    printf("Press any key to start...\n");
+    getch();
+
+    startGame();
 
     return 0;
-} 
+}
