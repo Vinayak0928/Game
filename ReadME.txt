@@ -111,3 +111,74 @@ Sleep(120) controls game speed; adjusting this changes difficulty.
 
 Sound is async, so it doesn’t block rendering.
 
+
+
+
+
+
+
+1. New Features Added
+1.1 Score System
+
+A score counter is added.
+
+Score increases every time the obstacle successfully reaches the bottom and resets.
+
+1.2 Speed / Difficulty Increase
+
+Game starts slow and becomes faster as the score increases.
+
+Speed reduces (game becomes harder) after every successful dodge.
+
+
+✅ 1.3 Restart & Quit Option After Game Over
+
+When the player dies:
+
+They can press R to restart the game.
+
+Or press Q to quit the game.
+
+2. Gameplay Improvements
+
+ 2.1 Separate startGame() Function
+
+The entire game loop was moved into a new function:
+
+void startGame()
+
+
+Benefits:
+
+Enables restart without resetting the whole program.
+
+Cleaner and modular code.
+
+ 2.2 Better Graphics (Using * and |)
+
+Obstacle:* 
+Player:|
+
+This makes the field easier to read.
+
+ 2.3 UI Border Improved
+
+Border added to top and bottom:
+
++-----------+
+|           |
+|     *     |
+|           |
+|     |     |
++-----------+
+
+3. Input Handling Improvement
+
+The logic for LEFT/RIGHT keys remains the same:
+
+if (ch == 75 && x > 0)   x--;   // LEFT
+if (ch == 77 && x < 2)   x++;   // RIGHT
+
+
+This allows smooth and responsive movement.
+
