@@ -130,8 +130,7 @@ Game starts slow and becomes faster as the score increases.
 
 Speed reduces (game becomes harder) after every successful dodge.
 
-
-✅ 1.3 Restart & Quit Option After Game Over
+ 1.3 Restart & Quit Option After Game Over
 
 When the player dies:
 
